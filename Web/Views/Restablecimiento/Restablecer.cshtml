@@ -1,0 +1,33 @@
+﻿@model RestablecimientoContrasenaViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_LayoutLogin";
+}
+
+<main class="form-signin">
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4 offset-md-4 col-12">
+
+                @if (string.IsNullOrEmpty(Model?.IdRestablecimiento))
+                {
+                    <div class="alert alert-danger" >El enlace de restablecimiento no es valido</div>
+                }
+                else
+                {
+                    <form asp-action="Guardar">
+                        <input type="hidden" asp-for="IdRestablecimiento" />
+                        <h1 class="h3 mb-3 fw-normal">Cambiar Contrasena</h1>
+                        <label class="visually-hidden">Nueva Contrasena</label>
+                        <input asp-for="NuevaContrasena" type="password" class="form-control" placeholder="Nueva Contraseña" required />
+                        <label  class="visually-hidden">Repetir Contrasena</label>
+                        <input asp-for="ConfirmacionContrasena" type="password" class="form-control" placeholder="Confirmar Contraseña" required />
+                        <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">Guardar</button>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</main>

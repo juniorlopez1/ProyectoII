@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Datos": {
+      "commandName": "Executable",
+      "executablePath": "smtp4dev"
+    }
+  }
+}

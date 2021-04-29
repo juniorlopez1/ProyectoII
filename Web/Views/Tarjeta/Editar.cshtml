@@ -1,0 +1,173 @@
+﻿@model Web.Models.TarjetaViewModel
+
+@{ ViewData["Title"] = "Editar"; }
+
+<h1>Tarjeta</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @{
+            if (Model.Id == 0)
+            {
+                //----------------------------------------------------------------------------------------------- FormTarjetaNueva
+                <form asp-action="Guardar">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @*ID tarjeta*@
+                    <div class="form-group">
+                        <label asp-for="Id" class="control-label">ID Tarjeta</label>
+                        <input asp-for="Id" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
+                    @*Numero Tarjeta*@
+                    <div name="card-container" class="form-group">
+                        <input asp-for="NumeroTarjeta" class="form-control" type="text" id="card" maxlength="16" />
+                        <label asp-for="NumeroTarjeta" class="card-label control-label" for="">Credit Card</label>
+                        <span asp-validation-for="NumeroTarjeta" class="text-danger"></span>
+                        <div id="logo"></div>
+                    </div>
+                    @*ID Cliente ??*@
+                    <div class="form-group">
+                        <label asp-for="ClienteId" class="control-label">ID Cliente</label>
+                        @*Mostrar nombre de cliente view bag TODO o tomar el del login system role*@
+                        <input asp-for="ClienteId" class="form-control" value="1" />
+                        <span asp-validation-for="ClienteId" class="text-danger"></span>
+                    </div>
+                    @*Expiracion*@
+                    <div class="form-group">
+                        <label asp-for="Expiracion" class="control-label"></label>
+                        <input asp-for="Expiracion" class="form-control" type="month" min="2021-05" value="2021-06" />
+                        <span asp-validation-for="Expiracion" class="text-danger"></span>
+                    </div>
+                    @*Titular*@
+                    <div class="form-group">
+                        <label asp-for="Titular" class="control-label"></label>
+                        <input asp-for="Titular" class="form-control" />
+                        <span asp-validation-for="Titular" class="text-danger"></span>
+                    </div>
+                    @*CSV*@
+                    <div class="form-group">
+                        <label asp-for="Csv" class="control-label">CSV</label>
+                        <input asp-for="Csv" class="form-control" type="number" min="1" max="999" />
+                        <span asp-validation-for="Csv" class="text-danger"></span>
+                    </div>
+                    @*TipoTarjeta*@
+                    <div class="form-group">
+                        <label asp-for="TipoTarjeta" class="control-label"> Tipo Tarjeta</label>
+                        @{
+                            if (Model.NumeroTarjeta.ToString().StartsWith('3'))
+                            {
+                                <input asp-for="TipoTarjeta" class="form-control" readonly="readonly" value="American Express" />
+                            }
+                            else if (Model.NumeroTarjeta.ToString().StartsWith('4'))
+                            {
+                                <input asp-for="TipoTarjeta" class="form-control" readonly="readonly" value="VISA" />
+                            }
+                            else if (Model.NumeroTarjeta.ToString().StartsWith('5'))
+                            {
+                                <input asp-for="TipoTarjeta" class="form-control" readonly="readonly" value="MasterCard" />
+                            }
+                            else if (Model.NumeroTarjeta.ToString().StartsWith('6'))
+                            {
+                                <input asp-for="TipoTarjeta" class="form-control" readonly="readonly" value="Discover" />
+                            }
+                            else
+                            {
+                                <input asp-for="TipoTarjeta" class="form-control" readonly="readonly" value="Otra" />
+                            }
+                        }
+                        <span asp-validation-for="TipoTarjeta" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
+            }
+            else
+            {
+                //----------------------------------------------------------------------------------------------- FormTarjetaExistente
+                <form asp-action="Guardar">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @*ID tarjeta*@
+                    <div class="form-group">
+                        <label asp-for="Id" class="control-label">ID Tarjeta</label>
+                        <input asp-for="Id" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
+                    @*Numero Tarjeta*@
+                    <div name="card-container" class="form-group">
+                        <input asp-for="NumeroTarjeta" class="form-control" type="text" id="card" maxlength="16" />
+                        <label asp-for="NumeroTarjeta" class="card-label control-label" for="">Credit Card</label>
+                        <span asp-validation-for="NumeroTarjeta" class="text-danger"></span>
+                        <div id="logo"></div>
+                    </div>
+                    @*ID Cliente ??*@
+                    <div class="form-group">
+                        <label asp-for="ClienteId" class="control-label">ID Cliente</label>
+                        @*Mostrar nombre de cliente view bag TODO o tomar el del login system role*@
+                        <input asp-for="ClienteId" class="form-control" readonly="readonly"/>
+                        <span asp-validation-for="ClienteId" class="text-danger"></span>
+                    </div>
+                    @*Expiracion*@
+                    <div class="form-group">
+                        <label asp-for="Expiracion" class="control-label"></label>
+                        <input asp-for="Expiracion" class="form-control" type="month"  />
+                        <span asp-validation-for="Expiracion" class="text-danger"></span>
+                    </div>
+                    @*Titular*@
+                    <div class="form-group">
+                        <label asp-for="Titular" class="control-label"></label>
+                        <input asp-for="Titular" class="form-control" />
+                        <span asp-validation-for="Titular" class="text-danger"></span>
+                    </div>
+                    @*CSV*@
+                    <div class="form-group">
+                        <label asp-for="Csv" class="control-label">CSV</label>
+                        <input asp-for="Csv" class="form-control" type="number" min="1" max="999" />
+                        <span asp-validation-for="Csv" class="text-danger"></span>
+                    </div>
+                    @*TipoTarjeta*@
+                    <div class="form-group">
+                        <label asp-for="TipoTarjeta" class="control-label"> Tipo Tarjeta</label>
+                        @{
+                            if (Model.NumeroTarjeta.ToString().StartsWith('3'))
+                            {
+                                <input asp-for="TipoTarjeta" class="form-control" readonly="readonly" value="American Express" />
+                            }
+                            else if (Model.NumeroTarjeta.ToString().StartsWith('4'))
+                            {
+                                <input asp-for="TipoTarjeta" class="form-control" readonly="readonly" value="VISA" />
+                            }
+                            else if (Model.NumeroTarjeta.ToString().StartsWith('5'))
+                            {
+                                <input asp-for="TipoTarjeta" class="form-control" readonly="readonly" value="MasterCard" />
+                            }
+                            else if (Model.NumeroTarjeta.ToString().StartsWith('6'))
+                            {
+                                <input asp-for="TipoTarjeta" class="form-control" readonly="readonly" value="Discover" />
+                            }
+                            else
+                            {
+                                <input asp-for="TipoTarjeta" class="form-control" readonly="readonly" value="Otra" />
+                            }
+                        }
+                        <span asp-validation-for="TipoTarjeta" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
+            }
+        }
+
+    </div>
+</div>
+
+<div>
+    <a asp-action="Lista">Regresar</a>
+</div>
+
+@section Scripts {
+    <script src="~/vanilla-card-validator-master/dist/assets/cardValidator.bundle.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

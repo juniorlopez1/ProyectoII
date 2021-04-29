@@ -1,0 +1,135 @@
+﻿@model Web.Models.TransaccionViewModel
+
+@{ ViewData["Title"] = "Editar";
+
+    //Estado
+    List<SelectListItem> optionsEstado = new List<SelectListItem>();
+    optionsEstado.Add(new SelectListItem("Aprobado", "Aprobado"));
+    optionsEstado.Add(new SelectListItem("Rechazado", "Rechazado"));
+    optionsEstado.Add(new SelectListItem("Pendiente", "Pendiente"));
+
+}
+
+<h1>Transaccion</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        @{
+            if (Model.Id == 0)
+            {
+                //----------------------------------------------------------------------------------------------- FormTransaccionNueva
+                <form asp-action="Guardar">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        @*Id*@
+                        <label asp-for="Id" class="control-label">Id</label>
+                        <input asp-for="Id" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
+                    @*Estado*@
+                    <div class="form-group">
+                        <label asp-for="Estado" class="control-label"></label>
+                        @*Se muestra pendiente para una transaccion nueva*@
+                        <input asp-for="Estado" class="form-control" readonly="readonly" value="Pendiente" />
+                        <span asp-validation-for="Estado" class="text-danger"></span>
+                    </div>
+                    @*ClienteOrigen*@
+                    <div class="form-group">
+                        <label asp-for="ClienteOrigen" class="control-label">Cliente de Origen</label>
+                        <input asp-for="ClienteOrigenNavigation.NombreCompleto" class="form-control" />
+                        <span asp-validation-for="ClienteOrigen" class="text-danger"></span>
+                    </div>
+                    @*ClienteDestino*@
+                    <div class="form-group">
+                        <label asp-for="ClienteDestino" class="control-label">Cliente Destino</label>
+                        <input asp-for="ClienteDestinoNavigation.NombreCompleto" class="form-control" />
+                        <span asp-validation-for="ClienteDestino" class="text-danger"></span>
+                    </div>
+                    @*Monto*@
+                    <div class="form-group">
+                        <label asp-for="Monto" class="control-label"></label>
+                        <input asp-for="Monto" class="form-control" type="number" min="0.00" max="1000000.00" step="0.01" />
+                        <span asp-validation-for="Monto" class="text-danger"></span>
+                    </div>
+                    @*MetodoPago*@
+                    <div class="form-group">
+                        <label asp-for="MetodoPagoId" class="control-label">Metodo de Pago</label>
+                        <input asp-for="MetodoPago.TipoTarjeta" class="form-control" />
+                        <span asp-validation-for="MetodoPagoId" class="text-danger"></span>
+                    </div>
+                    @*Detalle*@
+                    <div class="form-group">
+                        <label asp-for="Detalle" class="control-label"></label>
+                        <input asp-for="Detalle" class="form-control" />
+                        <span asp-validation-for="Detalle" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
+            }
+            else
+            {
+                //----------------------------------------------------------------------------------------------- FormTransaccionExistente
+                <form asp-action="Guardar">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        @*Id*@
+                        <label asp-for="Id" class="control-label">Id</label>
+                        <input asp-for="Id" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
+                    @*Estado*@
+                    <div class="form-group">
+                        <label asp-for="Estado" class="control-label"></label>
+                        @Html.DropDownListFor(m => m.Estado, optionsEstado, new { @class = "form-control" })
+                        <span asp-validation-for="Estado" class="text-danger"></span>
+                    </div>
+                    @*ClienteOrigen*@
+                    <div class="form-group">
+                        <label asp-for="ClienteOrigen" class="control-label">Cliente de Origen</label>
+                        <input asp-for="ClienteOrigenNavigation.NombreCompleto" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="ClienteOrigen" class="text-danger"></span>
+                    </div>
+                    @*ClienteDestino*@
+                    <div class="form-group">
+                        <label asp-for="ClienteDestino" class="control-label">Cliente Destino</label>
+                        <input asp-for="ClienteDestinoNavigation.NombreCompleto" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="ClienteDestino" class="text-danger"></span>
+                    </div>
+                    @*Monto*@
+                    <div class="form-group">
+                        <label asp-for="Monto" class="control-label"></label>
+                        <input asp-for="Monto" class="form-control" type="number" min="0.00" max="1000000.00" step="0.01" readonly="readonly" />
+                        <span asp-validation-for="Monto" class="text-danger"></span>
+                    </div>
+                    @*MetodoPago*@
+                    <div class="form-group">
+                        <label asp-for="MetodoPagoId" class="control-label">Metodo de Pago</label>
+                        <input asp-for="MetodoPago.TipoTarjeta" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="MetodoPagoId" class="text-danger"></span>
+                    </div>
+                    @*Detalle*@
+                    <div class="form-group">
+                        <label asp-for="Detalle" class="control-label"></label>
+                        <input asp-for="Detalle" class="form-control" />
+                        <span asp-validation-for="Detalle" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
+            }
+        }
+    </div>
+</div>
+
+<div>
+    <a asp-action="Lista">Regresar</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

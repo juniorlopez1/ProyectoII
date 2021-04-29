@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Web.Models.ClienteViewModel>
+
+@{ ViewData["Title"] = "Lista"; }
+
+<h1>Clientes</h1>
+
+<p>
+    <a asp-action="Editar">Crear Cliente</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                Nombre Usuario
+            </th>
+            <th>
+                Nombre Completo
+            </th>
+            <th>
+                Tipo Cliente
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Permiso)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreUsuario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreCompleto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoCliente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Permiso)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Editar", new { Id = item.Id }) |
+                    @Html.ActionLink("Desactivar", "Eliminar", new { Id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

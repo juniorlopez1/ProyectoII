@@ -1,0 +1,162 @@
+﻿@model Web.Models.ClienteViewModel
+
+@{
+    ViewData["Title"] = "Editar";
+
+    //Tipo Cliente
+    List<SelectListItem> optionsTipo = new List<SelectListItem>();
+    optionsTipo.Add(new SelectListItem("Comercio", "Comercio"));
+    optionsTipo.Add(new SelectListItem("Persona", "Persona"));
+
+    //Permiso
+    List<SelectListItem> optionsPermiso = new List<SelectListItem>();
+    optionsPermiso.Add(new SelectListItem("Admin", "Admin"));
+    optionsPermiso.Add(new SelectListItem("Lectura", "Lectura"));
+}
+
+@if (Model == null)
+{
+    <div class="alert alert-danger">No se encontro el cliente</div>
+}
+else
+{
+
+
+
+    <h1>Editar</h1>
+
+    <hr />
+
+
+    <div class="row">
+        <div class="col-md-4">
+            @{
+                if (Model.Id == 0)
+                {
+                    //----------------------------------------------------------------------------------------------- FormClienteNuevo
+                    <form asp-action="Guardar" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        @*Id*@
+                        <div class="form-group">
+                            <label asp-for="Id" class="control-label"></label>
+                            <input asp-for="Id" class="form-control" readonly="readonly" />
+                            <span asp-validation-for="Id" class="text-danger"></span>
+                        </div>
+                        @*Contrasena*@
+                        <div class="form-group">
+                            <label asp-for="Contrasena" class="control-label"></label>
+                            <input asp-for="Contrasena" class="form-control" type="password" />
+                            <span asp-validation-for="Contrasena" class="text-danger"></span>
+                        </div>
+                        @*ExpiracionContrasena*@
+                        <div class="form-group">
+                            <label asp-for="ExpiracionContrasena" class="control-label"></label>
+                            <input asp-for="ExpiracionContrasena" class="form-control" type="month" value="2021-05" readonly="readonly" />
+                            <span asp-validation-for="ExpiracionContrasena" class="text-danger"></span>
+                        </div>
+                        @*NombreUsuario*@
+                        <div class="form-group">
+                            <label asp-for="NombreUsuario" class="control-label">Nombre Usuario</label>
+                            <input asp-for="NombreUsuario" class="form-control" />
+                            <span asp-validation-for="NombreUsuario" class="text-danger"></span>
+                        </div>
+                        @*NombreCompleto*@
+                        <div class="form-group">
+                            <label asp-for="NombreCompleto" class="control-label">Nombre Completo</label>
+                            <input asp-for="NombreCompleto" class="form-control" />
+                            <span asp-validation-for="NombreCompleto" class="text-danger"></span>
+                        </div>
+                        @*TipoCliente*@
+                        <div class="form-group">
+                            <label asp-for="TipoCliente" class="control-label">Tipo Cliente</label>
+                            @Html.DropDownListFor(m => m.TipoCliente, optionsTipo, new { @class = "form-control" })
+                            <span asp-validation-for="TipoCliente" class="text-danger"></span>
+                        </div>
+                        @*Estado*@
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="Estado" /> @Html.DisplayNameFor(model => model.Estado)
+                            </label>
+                        </div>
+                        @*Permiso*@
+                        <div class="form-group">
+                            <label asp-for="Permiso" class="control-label">Permiso</label>
+                            @Html.DropDownListFor(m => m.Permiso, optionsPermiso, new { @class = "form-control" })
+                            <span asp-validation-for="Permiso" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    //----------------------------------------------------------------------------------------------- FormClienteExistente
+        <form asp-action="Guardar" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*Id*@
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" readonly="readonly" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            @*Contrasena*@
+            @*<div class="form-group">
+                <label asp-for="Contrasena" class="control-label"></label>
+                <input asp-for="Contrasena" class="form-control" type="password" readonly="" />
+                <span asp-validation-for="Contrasena" class="text-danger"></span>
+            </div>*@
+            <input asp-for="Contrasena" type="hidden" />
+            @*ExpiracionContrasena*@
+            <div class="form-group">
+                <label asp-for="ExpiracionContrasena" class="control-label"></label>
+                <input asp-for="ExpiracionContrasena" class="form-control" type="month" readonly="readonly" />
+                <span asp-validation-for="ExpiracionContrasena" class="text-danger"></span>
+            </div>
+            @*NombreUsuario*@
+            <div class="form-group">
+                <label asp-for="NombreUsuario" class="control-label">Nombre Usuario</label>
+                <input asp-for="NombreUsuario" class="form-control" readonly="readonly" />
+                <span asp-validation-for="NombreUsuario" class="text-danger"></span>
+            </div>
+            @*NombreCompleto*@
+            <div class="form-group">
+                <label asp-for="NombreCompleto" class="control-label">Nombre Completo</label>
+                <input asp-for="NombreCompleto" class="form-control" />
+                <span asp-validation-for="NombreCompleto" class="text-danger"></span>
+            </div>
+            @*TipoCliente*@
+            <div class="form-group">
+                <label asp-for="TipoCliente" class="control-label">Tipo Cliente</label>
+                @Html.DropDownListFor(m => m.TipoCliente, optionsTipo, new { @class = "form-control" })
+                <span asp-validation-for="TipoCliente" class="text-danger"></span>
+            </div>
+            @*Estado*@
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Estado" /> @Html.DisplayNameFor(model => model.Estado)
+                </label>
+            </div>
+            @*Permiso*@
+            <div class="form-group">
+                <label asp-for="Permiso" class="control-label">Permiso</label>
+                @Html.DropDownListFor(m => m.Permiso, optionsPermiso, new { @class = "form-control" })
+                <span asp-validation-for="Permiso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+                }
+            }
+        </div>
+    </div>
+}
+<div>
+    <a asp-action="Lista">Regresar</a>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

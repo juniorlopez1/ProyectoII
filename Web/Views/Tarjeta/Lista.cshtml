@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Web.Models.TarjetaViewModel>
+
+@{ ViewData["Title"] = "View";
+}
+
+<h1>Tarjetas</h1>
+
+<p>
+    <a asp-action="Editar">Crear Tarjeta</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroTarjeta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClienteId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Expiracion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Titular)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Csv)
+            </th>
+            <th>
+                Tipo Tarjeta
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @item.NumeroTarjeta.ToString().Remove(0, 11).Insert(0, "****-****-****-".ToString())
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClienteId)
+                </td>
+                <td>
+                    @item.Expiracion.ToString("MMMM yy");
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titular)
+                </td>
+                <td>
+                    @{
+                        if (item.Csv.ToString().Length == 1)
+                        {
+                            string.Concat("00", item.Csv);
+                        }
+                        else if (item.Csv.ToString().Length == 2)
+                        {
+                            string.Concat("0", item.Csv);
+                        }
+                        else
+                        {
+                            item.Csv.ToString();
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoTarjeta)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Editar", new { Id = item.Id }) |
+                    @Html.ActionLink("Borrar", "Eliminar", new { Id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
